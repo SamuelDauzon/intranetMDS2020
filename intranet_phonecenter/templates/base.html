@@ -24,7 +24,13 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-
+        {% if request.user.is_superuser %}
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'admin:index' %}">Admin Django</a>
+            </li>
+          </ul>
+        {% endif %}
 
       </div>
     </nav>
