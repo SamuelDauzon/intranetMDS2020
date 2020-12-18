@@ -1,9 +1,18 @@
 from django import forms
 
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
+
 from .models import UserProfile
 
 
-class RegisterForm(forms.Form):
+class FormWithSubmit(forms.Form):
+    helper = FormHelper()
+    helper.add_input(Submit('submit', "Valider", css_class="btn btn-lg btn-primary btn-block bg_main"))
+    helper.form_method = 'POST'
+
+
+class RegisterForm(FormWithSubmit):
     username = forms.CharField(
         label = "Nom d'utilisateur",
         max_length=64,

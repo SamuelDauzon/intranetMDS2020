@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
 {% block title %}
     {{ title }}
 {% endblock %}
@@ -11,11 +14,7 @@
           <h5 class="card-title text-center">{{ title }}</h5>
           <div class="sub_title"></div>
           <div class="custom_form_embed">
-            <form action="{{ url_form }}" method="POST">
-              {% csrf_token %}
-              {{ form.as_p }}
-              <input type="submit" name="Valider">
-            </form>
+            {% crispy form %}
           </div>
         </div>
       </div>
