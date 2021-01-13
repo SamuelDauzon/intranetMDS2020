@@ -1,7 +1,8 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from .forms import RegisterForm
 from .models import UserProfile
@@ -47,3 +48,37 @@ def register(request):
             'title': "Inscription",
             'form':form,
         })
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("users:login"))
+
+
+def login_view(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("users:hello"))
+    elif 'username' in request.POST and 'password' in request.POST:
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            if request.GET.get('next') is not None:
+                return redirect(request.GET['next'])
+            else:
+                return HttpResponseRedirect(reverse("users:hello"))
+        else:
+            return render(
+                request,
+                'users/login.html',
+                {
+                    "auth_error": True,
+                }
+            )
+    else:
+        return render(
+            request,
+            'users/login.html',
+            {}
+        )

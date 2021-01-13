@@ -31,9 +31,24 @@
             </li>
           </ul>
         {% endif %}
-        <li class="nav-item active">
-          <a class="nav-link" href="{% url 'users:register' %}">Inscription</a>
-        </li>
+        {% if user.is_authenticated %}
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'users:logout' %}">Déconnexion</a>
+            </li>
+          </ul>
+        {% else %}
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'users:login' %}">Connexion</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'users:register' %}">Inscription</a>
+            </li>
+          </ul>
+        {% endif %}
 
       </div>
     </nav>
