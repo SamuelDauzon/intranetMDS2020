@@ -9,6 +9,7 @@ class NewCallForm(ModelFormWithSubmit):
     tags = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
         queryset=CallTag.objects.all(),
+        required=False,
         )
 
     class Meta:

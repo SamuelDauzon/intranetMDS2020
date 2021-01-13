@@ -67,6 +67,7 @@ class Call(BaseModel):
     tags = models.ManyToManyField(
         "CallTag",
         verbose_name="Tags",
+        blank=True,
         )
 
     content = models.TextField(
@@ -76,6 +77,7 @@ class Call(BaseModel):
     solved = models.BooleanField(
         verbose_name = "Résolu",
         default=False,
+        # blank=True,
         db_index=True,
         )
 
