@@ -11,6 +11,10 @@ class FormWithSubmit(forms.Form):
     helper.add_input(Submit('submit', "Valider", css_class="btn btn-lg btn-primary btn-block bg_main"))
     helper.form_method = 'POST'
 
+class ModelFormWithSubmit(forms.ModelForm):
+    helper = FormHelper()
+    helper.add_input(Submit('submit', "Valider", css_class="btn btn-lg btn-primary btn-block bg_main"))
+    helper.form_method = 'POST'
 
 class RegisterForm(FormWithSubmit):
     username = forms.CharField(
@@ -61,4 +65,18 @@ class RegisterForm(FormWithSubmit):
             raise forms.ValidationError("Cet email existe déjà")
 
         return cleaned_data
+
+class AccountSettingsForm(ModelFormWithSubmit):
+
+    # Facultatif
+    display_name = forms.CharField(
+        label = "Nom d'affichage sur le site",
+        max_length=256,
+        )
+
+
+
+    class Meta:
+        model = UserProfile
+        fields = ('display_name', )
 

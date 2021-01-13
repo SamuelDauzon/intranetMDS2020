@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.shortcuts import render, redirect
 
-from .forms import RegisterForm
+from .forms import RegisterForm, AccountSettingsForm
 from .models import UserProfile
 
 
@@ -13,13 +13,13 @@ def hello_old(request):
     return HttpResponse("Hello World!")
 
 def hello(request):
-	return render(
-		request,
-		'users/hello.html',
-		{
-			'message': "Hello World!",
-		}
-		)
+    return render(
+        request,
+        'users/hello.html',
+        {
+            'message': "Hello World!",
+        }
+        )
 
 def register(request):
     if request.user.is_authenticated:
@@ -82,3 +82,33 @@ def login_view(request):
             'users/login.html',
             {}
         )
+
+@login_required
+def myaccount(request):
+    return render(
+        request,
+        'users/myaccount.html',
+    )
+
+
+@login_required
+def account_settings(request):
+    if request.method == 'POST':
+        form = AccountSettingsForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+    else:
+
+        # print(request.user)
+        # print("User : "+str(request.user))
+        # print("User : %s" % (str(request.user), ) )
+
+        form = AccountSettingsForm(instance=request.user)
+    return render(
+        request,
+        'utils/form.html',
+        {
+            'title': "Configuration de compte",
+            'form':form,
+        }
+    )
