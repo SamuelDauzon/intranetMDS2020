@@ -30,6 +30,11 @@
               <a class="nav-link" href="{% url 'admin:index' %}">Admin Django</a>
             </li>
           </ul>
+          <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'users:role_attribution' %}">Attribuer des rôles</a>
+              </li>
+          </ul>
         {% endif %}
         {% if user.is_authenticated %}
           <ul class="navbar-nav mr-auto">

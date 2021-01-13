@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.urls import reverse
 from django.shortcuts import render, redirect
 
@@ -12,12 +12,13 @@ from .models import UserProfile
 def hello_old(request):
     return HttpResponse("Hello World!")
 
-def hello(request):
+def hello(request, message=None):
+    message = "" if not message else message
     return render(
         request,
         'users/hello.html',
         {
-            'message': "Hello World!",
+            'message': "Hello World! %s" % message,
         }
         )
 
@@ -113,4 +114,18 @@ def account_settings(request):
         }
     )
 
+
+@user_passes_test(lambda u: u.is_superuser)
+def role_attribution(request):
+    users = UserProfile.objects.filter(
+        teammember__isnull=True,
+        customer__isnull=True
+        ).order_by("-id")
+    return render(
+        request,
+        'users/role_attribution.html',
+        {
+            'users': users,
+        }
+    )
 

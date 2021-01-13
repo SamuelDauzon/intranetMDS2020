@@ -61,6 +61,7 @@ class TeamMember(BaseModel):
 
     support_level = models.PositiveSmallIntegerField(
         default=1,
+        help_text = "0 expert, 5 débutant",
         )
 
     def __str__(self):
