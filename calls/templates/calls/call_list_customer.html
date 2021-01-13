@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block title_html %}
+    Liste d'appels
+{% endblock %}
+{% block content %}
+    <a class="btn btn-primary btn-block" href="{% url 'calls:new_call_customer' %}" role="button">Nouvel appel</a>
+
+    <h2>Liste d'appels</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Appel</th>
+                <th scope="col">Intervenant</th>
+                <th scope="col">
+                    Résolu
+                </th>
+                <th>Modifier</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for call in calls %}
+            <tr>
+                <th scope="row">{{ call }}</th>
+                <td>{{ call.teammember }}</td>
+                <td>
+                    {% if call.solved %}
+                        ✅
+                    {% else %}
+                        ❌
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="btn btn-primary" href="{% url 'calls:call_edit_customer' call.id %}">Modifier</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

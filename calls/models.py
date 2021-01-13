@@ -64,6 +64,16 @@ class Call(BaseModel):
         default=None,
         )
 
+    call_category = models.ForeignKey(
+        CallCategory,
+        on_delete=models.SET_NULL,
+        verbose_name = "Catégorie",
+        db_index=True,
+        null=True,
+        blank=True,
+        default=1,
+        )
+
     tags = models.ManyToManyField(
         "CallTag",
         verbose_name="Tags",

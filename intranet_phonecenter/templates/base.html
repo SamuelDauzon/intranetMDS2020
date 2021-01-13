@@ -47,13 +47,19 @@
               <a class="nav-link" href="{% url 'users:myaccount' %}">{{ user }}</a>
             </li>
           </ul>
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'calls:call_list' %}">Liste d'appels</a>
+            </li>
+          </ul>
           {% if request.user.is_teammember %}
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="{% url 'calls:call_list' %}">Liste d'appels</a>
+                <a class="nav-link" href="{% url 'calls:call_list_no_teammember' %}">Appels à prendre</a>
               </li>
             </ul>
           {% endif %}
+          
         {% else %}
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
