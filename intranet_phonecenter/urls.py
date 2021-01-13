@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.contrib import admin
 
 admin.site.enable_nav_sidebar = False
@@ -30,5 +30,9 @@ urlpatterns = [
     path(r'credits/', include('credits.urls', namespace='credits')),
     path(r'calls/', include('calls.urls', namespace='calls')),
     path(r'supports/', include('supports.urls', namespace='supports')),
+    path('', users.views.login_view),
     path(r'admin/', admin.site.urls),
+    # Version bourrine
+    # re_path(r'^.*$', users.views.login_view),
 ]
+

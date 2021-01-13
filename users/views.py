@@ -112,3 +112,5 @@ def account_settings(request):
             'form':form,
         }
     )
+
+
