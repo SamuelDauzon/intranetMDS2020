@@ -47,6 +47,13 @@
               <a class="nav-link" href="{% url 'users:myaccount' %}">{{ user }}</a>
             </li>
           </ul>
+          {% if request.user.is_teammember %}
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'calls:new_call' %}">Nouvel appel</a>
+              </li>
+            </ul>
+          {% endif %}
         {% else %}
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">

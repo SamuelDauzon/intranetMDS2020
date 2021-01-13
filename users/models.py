@@ -45,6 +45,12 @@ class UserProfile(AbstractUser, BaseModel):
         else:
             return self.username
 
+    def is_teammember(self):
+        return self.user_type == 1
+
+    def is_customer(self):
+        return self.user_type == 2
+
     class Meta:
         verbose_name = "Utilisateur"
         verbose_name_plural = "Utilisateurs"
