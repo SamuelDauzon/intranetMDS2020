@@ -32,6 +32,13 @@ class UserProfile(AbstractUser, BaseModel):
         null=True,
         )
 
+    newsletter_agreement = models.BooleanField(
+        verbose_name = "Recevoir des newsletter",
+        help_text = "Une par semaine maximum",
+        default=False,
+        db_index=True,
+        )
+
     def __str__(self):
         if self.display_name :
             return self.display_name
