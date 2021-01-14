@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
+from django.http import HttpResponseRedirect
 
 from .forms import NewCallForm, NewCustomerCallForm, CustomerCallEditForm
 from .forms import CallEditTeammemberForm, CallRatingForm
@@ -31,7 +32,7 @@ def new_call(request):
         if form.is_valid():
             form.instance.teammember = request.user.teammember
             form.save()
-
+            return HttpResponseRedirect(reverse("calls:call_list"))
     else:
         form = NewCallForm()
     return render(

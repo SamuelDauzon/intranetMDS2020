@@ -90,6 +90,13 @@ class Call(BaseModel):
         # blank=True,
         db_index=True,
         )
+    
+    solved_date = models.DateTimeField(
+        null=True,
+        blank=True,
+        default=None,
+        verbose_name="Date de résolution",
+        )
 
     rating = models.PositiveSmallIntegerField(
         db_index=True,
