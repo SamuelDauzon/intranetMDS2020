@@ -17,6 +17,7 @@
                     Résolu
                 </th>
                 <th>Modifier</th>
+                <th>Notes</th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +34,17 @@
                 </td>
                 <td>
                     <a class="btn btn-primary" href="{% url 'calls:call_edit_customer' call.id %}">Modifier</a>
+                </td>
+                <td>
+                    {% if call.solved %}
+                        {% if call.rating %}
+                          {{ call.display_rating }}
+                        {% else %}
+                            <a class="btn btn-primary" href="{% url 'calls:call_rating' call.id %}">Evaluer</a>
+                        {% endif %}
+                    {% else %}
+                        A noter après résolution
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}

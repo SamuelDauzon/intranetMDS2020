@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
 
 from .forms import NewCallForm, NewCustomerCallForm, CustomerCallEditForm
-from .forms import CallEditTeammemberForm
+from .forms import CallEditTeammemberForm, CallRatingForm
 from .models import Call
 
 def is_teammember(user=None):
@@ -149,6 +149,45 @@ def call_list_no_teammember(request):
     return render(
         request,
         'calls/call_list.html',
+        {
+            'calls': calls,
+        }
+    )
+
+
+@user_passes_test(is_customer)
+def call_rating(request, call_id):
+    current_instance = Call.objects.get(id = call_id, customer = request.user.customer)
+    if request.method == 'POST':
+        form = CallRatingForm(request.POST, instance = current_instance)
+        if form.is_valid():
+            form.save()
+    else:
+        form = CallRatingForm(instance = current_instance)
+    return render(
+        request,
+        'utils/form.html',
+        {
+            'title': "Noter la prestation",
+            'form':form,
+        }
+    )
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def bad_calls(request, call_id):
+    # Le call_id sert juste à illustrer l'utilisation du kwargs
+    template_name = ""
+    if request.user.is_teammember():
+        calls = Call.objects.filter(
+            rating__lte=5
+            ).order_by(
+                "-created",
+            )
+        template_name = "calls/call_list.html"
+    return render(
+        request,
+        template_name,
         {
             'calls': calls,
         }
