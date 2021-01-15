@@ -36,6 +36,13 @@
               </li>
           </ul>
         {% endif %}
+        {% if request.user.is_teammember %}
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'calls:new_call' %}">Nouvel appel</a>
+            </li>
+          </ul>
+        {% endif %}
         {% if user.is_authenticated %}
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">

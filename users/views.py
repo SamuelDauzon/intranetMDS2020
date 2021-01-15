@@ -7,6 +7,10 @@ from django.shortcuts import render, redirect
 from .forms import RegisterForm, AccountSettingsForm
 from .models import UserProfile
 
+def is_teammember(user=None):
+    if not user or user.is_anonymous:
+        return False
+    return user.is_teammember()
 
 # View
 def hello_old(request):
