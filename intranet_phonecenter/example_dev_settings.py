@@ -14,13 +14,13 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+LOG_DIR = os.path.join(BASE_DIR, "logs")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+SECRET_KEY = 'E2=3]VwjkT7E$rw:Z<(Q6ph^8~R`f6T=~c^D*NC@3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -135,5 +135,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = "users.UserProfile"
+
+LOGIN_URL = 'users:login'
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
