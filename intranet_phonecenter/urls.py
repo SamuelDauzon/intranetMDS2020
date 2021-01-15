@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.urls import path, include, re_path
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 
 admin.site.enable_nav_sidebar = False
 
@@ -32,7 +34,12 @@ urlpatterns = [
     path(r'supports/', include('supports.urls', namespace='supports')),
     path('', users.views.login_view),
     path(r'admin/', admin.site.urls),
+    path(r'summernote/', include('django_summernote.urls')),
     # Version bourrine
     # re_path(r'^.*$', users.views.login_view),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 

@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+from django_summernote.fields import SummernoteTextFormField, SummernoteTextField
+
 class BaseModel(models.Model):
     created       = models.DateTimeField(auto_now_add = True, verbose_name="Date de création")
     modified      = models.DateTimeField(auto_now = True, verbose_name="Date de modification")
@@ -91,5 +93,23 @@ class Customer(BaseModel):
 
     def __str__(self):
         return str(self.customer)
+
+
+class Article(BaseModel):
+    title = models.CharField(
+        verbose_name="Titre",
+        max_length=200,
+        )
+
+    content = SummernoteTextField(
+        verbose_name="Contenu",
+        )    
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Article"
+        verbose_name_plural = "Articles"
 
 
