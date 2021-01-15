@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 
 from .forms import NewCallForm, NewCustomerCallForm, CustomerCallEditForm
-from .forms import CallEditTeammemberForm
+from .forms import CallEditTeammemberForm, CallRatingForm
 from .models import Call
 from users.views import is_teammember, is_customer, is_customer_or_teammember
 
@@ -106,6 +106,7 @@ def new_call_customer(request):
         if form.is_valid():
             form.instance.customer = request.user.customer
             form.save()
+            return HttpResponseRedirect(reverse("calls:call_list"))
     else:
         form = NewCustomerCallForm()
     return render(
@@ -148,4 +149,43 @@ def call_list_no_teammember(request):
             'calls': calls,
         }
     )
+
+@user_passes_test(is_customer)
+def call_rating(request, call_id):
+    current_instance = Call.objects.get(id = call_id, customer = request.user.customer, solved = True)
+    if request.method == 'POST':
+        form = CallRatingForm(request.POST, instance = current_instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse("calls:call_list"))
+    else:
+        form = CallRatingForm(instance = current_instance)
+    return render(
+        request,
+        'utils/form.html',
+        {
+            'title': "Noter la prestation",
+            'form':form,
+        }
+    )
+
+@user_passes_test(lambda u: u.is_superuser)
+def bad_calls(request, call_id = None):
+    calls = Call.objects.filter(
+        rating__lte=5
+        )
+    print(calls.query)
+    calls = calls.order_by(
+        "-created",
+        )
+    print(calls.query)
+    return render(
+        request,
+        "calls/call_list.html",
+        {
+            'calls': calls,
+        }
+    )
+
+
 

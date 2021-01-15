@@ -18,6 +18,7 @@
                 </th>
                 <th>Modifier</th>
                 <th>Supprimer</th>
+                <th>Note</th>
             </tr>
         </thead>
         <tbody>
@@ -38,7 +39,16 @@
                     {% endif %}
                 </td>
                 <td>
-                    <a class="btn btn-primary" href="{% url 'calls:call_delete' call.id %}">Supprimer</a>
+                    {% if call.teammember and not call.solved %}
+                        <a class="btn btn-primary" href="{% url 'calls:call_delete' call.id %}">Supprimer</a>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if call.solved %}
+                        {% if call.rating %}
+                          {{ call.display_rating }}
+                        {% endif %}
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}

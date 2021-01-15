@@ -42,3 +42,11 @@ class CallEditTeammemberForm(ModelFormWithSubmit):
     class Meta:
         model = Call
         fields = ('teammember', )
+
+class CallRatingForm(ModelFormWithSubmit):
+
+    class Meta:
+        model = Call
+        fields = ('rating', )
+
+        

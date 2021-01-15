@@ -97,6 +97,22 @@ class Call(BaseModel):
         verbose_name="Date de résolution",
         )
 
+    rating = models.PositiveSmallIntegerField(
+        db_index=True,
+        null=True,
+        blank=True,
+        default=None,
+        validators=[
+            MaxValueValidator(10),
+            MinValueValidator(1)
+            ]
+        )
+
+    def display_rating(self):
+        if self.rating:
+            return "⭐"*self.rating+"⭒"*(10-self.rating)
+        return ""
+
     def __str__(self):
         return self.title
 
@@ -104,4 +120,3 @@ class Call(BaseModel):
         verbose_name = "Appel"
         verbose_name_plural = "Appels"
 
-        

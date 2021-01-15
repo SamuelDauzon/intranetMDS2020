@@ -35,13 +35,20 @@
                   <a class="nav-link" href="{% url 'users:role_attribution' %}">Attribuer des rôles</a>
               </li>
           </ul>
+          <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'calls:bad_calls' %}">Mauvais appels</a>
+          </li>
+        </ul>
         {% endif %}
-        {% if request.user.is_teammember %}
+        {% if request.user.is_customer_or_teammember %}
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
               <a class="nav-link" href="{% url 'calls:call_list' %}">Liste d'appels</a>
             </li>
           </ul>
+        {% endif %}
+        {% if request.user.is_teammember %}
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
               <a class="nav-link" href="{% url 'calls:call_list_no_teammember' %}">Appels à prendre</a>
