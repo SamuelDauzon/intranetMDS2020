@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load i18n %}
+{% load calls_filters %}
 {% block title_html %}
     Liste d'appels
 {% endblock %}
@@ -38,7 +39,7 @@
                 <td>
                     {% if call.solved %}
                         {% if call.rating %}
-                          {{ call.display_rating }}
+                          {{ call.rating | rating_stars:False }}
                         {% else %}
                             <a class="btn btn-primary" href="{% url 'calls:call_rating' call.id %}">Evaluer</a>
                         {% endif %}
