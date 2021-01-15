@@ -45,6 +45,9 @@ class UserProfile(AbstractUser, BaseModel):
     def is_customer(self):
         return self.user_type == 2
 
+    def is_customer_or_teammember(self):
+        return self.is_teammember() or self.is_customer()
+
     def __str__(self):
         if self.display_name :
             return self.display_name

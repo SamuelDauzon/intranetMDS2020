@@ -12,6 +12,16 @@ def is_teammember(user=None):
         return False
     return user.is_teammember()
 
+def is_customer(user=None):
+    if not user or user.is_anonymous:
+        return False
+    return user.is_customer()
+
+def is_customer_or_teammember(user=None):
+    if not user or user.is_anonymous:
+        return False
+    return user.is_customer_or_teammember()
+
 # View
 def hello_old(request):
     return HttpResponse("Hello World!")

@@ -42,6 +42,18 @@
               <a class="nav-link" href="{% url 'calls:call_list' %}">Liste d'appels</a>
             </li>
           </ul>
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'calls:call_list_no_teammember' %}">Appels à prendre</a>
+            </li>
+          </ul>
+        {% endif %}
+        {% if request.user.is_customer %}
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'calls:new_call_customer' %}">Demande d'assistance</a>
+            </li>
+          </ul>
         {% endif %}
         {% if user.is_authenticated %}
           <ul class="navbar-nav mr-auto">
