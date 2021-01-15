@@ -65,6 +65,7 @@ def call_edit(request, call_id=None):
         try:
             current_instance = Call.objects.get(
                 Q(id = call_id),
+                Q(solved = False),
                 Q(teammember = request.user.teammember) | Q(teammember__isnull=True),
                 )
         except Call.DoesNotExist as e:

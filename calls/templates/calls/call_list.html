@@ -33,7 +33,9 @@
                     {% endif %}
                 </td>
                 <td>
-                    <a class="btn btn-primary" href="{% url 'calls:call_edit' call.id %}">Modifier</a>
+                    {% if not call.solved %}
+                        <a class="btn btn-primary" href="{% url 'calls:call_edit' call.id %}">Modifier</a>
+                    {% endif %}
                 </td>
                 <td>
                     <a class="btn btn-primary" href="{% url 'calls:call_delete' call.id %}">Supprimer</a>
